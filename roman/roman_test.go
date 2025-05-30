@@ -13,6 +13,9 @@ func TestRomanNumerals(t *testing.T) {
 		{"3 to III", 3, "III"},
 		{"4 to IV (max 3 repeats", 4, "IV"},
 		{"5 to V", 5, "V"},
+		{"6 to VI", 6, "VI"},
+		{"7 to VII", 7, "VII"},
+		{"8 to VIII", 8, "VIII"},
 	}
 
 	for _, test := range cases {
