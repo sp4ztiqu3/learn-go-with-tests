@@ -22,6 +22,10 @@ func TestRomanNumerals(t *testing.T) {
 		{"18 to XVIII", 18, "XVIII"},
 		{"20 to XX", 20, "XX"},
 		{"39 to XXXIX", 39, "XXXIX"},
+		{"40 to XL", 40, "XL"},
+		{"47 to XLVII", 47, "XLVII"},
+		{"49 to XLIX", 49, "XLIX"},
+		{"50 to L", 50, "L"},
 	}
 
 	for _, test := range cases {
