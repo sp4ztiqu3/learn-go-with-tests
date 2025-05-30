@@ -3,10 +3,11 @@ package roman
 import (
 	"fmt"
 	"testing"
+	"testing/quick"
 )
 
 var cases = []struct {
-	Arabic int
+	Arabic uint16
 	Roman  string
 }{
 	{1, "I"},
@@ -27,17 +28,17 @@ var cases = []struct {
 	{47, "XLVII"},
 	{49, "XLIX"},
 	{50, "L"},
-	{Arabic: 100, Roman: "C"},
-	{Arabic: 90, Roman: "XC"},
-	{Arabic: 400, Roman: "CD"},
-	{Arabic: 500, Roman: "D"},
-	{Arabic: 900, Roman: "CM"},
-	{Arabic: 1000, Roman: "M"},
-	{Arabic: 1984, Roman: "MCMLXXXIV"},
-	{Arabic: 3999, Roman: "MMMCMXCIX"},
-	{Arabic: 2014, Roman: "MMXIV"},
-	{Arabic: 1006, Roman: "MVI"},
-	{Arabic: 798, Roman: "DCCXCVIII"},
+	{100, "C"},
+	{90, "XC"},
+	{400, "CD"},
+	{500, "D"},
+	{900, "CM"},
+	{1000, "M"},
+	{1984, "MCMLXXXIV"},
+	{3999, "MMMCMXCIX"},
+	{2014, "MMXIV"},
+	{1006, "MVI"},
+	{798, "DCCXCVIII"},
 }
 
 func TestRomanNumerals(t *testing.T) {
@@ -59,5 +60,21 @@ func TestConvertingToArabic(t *testing.T) {
 				t.Errorf("got %d, want %d", got, test.Arabic)
 			}
 		})
+	}
+}
+
+func TestPropertiesOfConversion(t *testing.T) {
+	assertion := func(arabic uint16) bool {
+		if arabic > 3999 {
+			return true
+		}
+		t.Log("testing", arabic)
+		roman := ConvertToRoman(arabic)
+		fromRoman := ConvertToArabic(roman)
+		return fromRoman == arabic
+	}
+
+	if err := quick.Check(assertion, nil); err != nil {
+		t.Error("failed checks", err)
 	}
 }
